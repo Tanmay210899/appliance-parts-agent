@@ -518,10 +518,36 @@ You ONLY help with dishwasher and refrigerator parts from PartSelect. Politely d
     def _deduplicate_response(self, text: str) -> str:
         """
         Remove duplicate paragraphs/sections that the LLM sometimes generates.
-        Checks for repeated blocks of 2+ sentences.
+        Checks for repeated blocks of 2+ sentences and entire response duplication.
         """
         if not text or len(text) < 100:
             return text
+        
+        # Check if entire response is duplicated (text appears twice)
+        # Split by various newline patterns
+        text_len = len(text)
+        half_len = text_len // 2
+        
+        # Check if first half matches second half (accounting for extra newlines)
+        if text_len > 200 and half_len > 100:
+            first_half = text[:half_len].strip()
+            second_half = text[half_len:].strip()
+            
+            # Normalize both halves for comparison
+            first_normalized = ' '.join(first_half.lower().split())
+            second_normalized = ' '.join(second_half.lower().split())
+            
+            # If second half starts with first half, it's a duplicate
+            if second_normalized.startswith(first_normalized[:200]):
+                # Calculate similarity percentage
+                min_len = min(len(first_normalized), len(second_normalized))
+                if min_len > 0:
+                    matching_chars = sum(1 for i in range(min_len) if first_normalized[i] == second_normalized[i])
+                    similarity = matching_chars / min_len
+                    
+                    # If >80% similar, return only first half
+                    if similarity > 0.8:
+                        return first_half
         
         # Split into paragraphs
         paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
