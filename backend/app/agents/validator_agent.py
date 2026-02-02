@@ -20,7 +20,7 @@ class ValidatorAgent:
     def __init__(self):
         # Configure Gemini client
         self.client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
-        self.model_id = os.getenv('LLM_MODEL', 'gemini-2.0-flash-thinking-exp-01-21')
+        self.model_id = os.getenv('LLM_MODEL', 'gemini-2.5-flash')
         
         # Validation prompt
         self.validation_prompt = """You are a validation agent that checks if responses are grounded in retrieved data and within scope.

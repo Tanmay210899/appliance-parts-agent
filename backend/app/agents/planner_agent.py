@@ -1,5 +1,5 @@
 """
-Planner Agent - Orchestrates SQL and Vector tools using Gemini 2.0 Flash
+Planner Agent - Orchestrates SQL and Vector tools using Gemini
 """
 
 import os
@@ -18,7 +18,6 @@ load_dotenv()
 class PlannerAgent:
     """
     Intelligent agent that analyzes user queries and orchestrates tool calls
-    Uses Google Gemini 2.0 Flash with function calling
     """
     
     def __init__(self, enable_validation: bool = True):
@@ -437,6 +436,9 @@ You ONLY help with dishwasher and refrigerator parts from PartSelect. Politely d
             if not final_response:
                 final_response = "I apologize, but I couldn't generate a proper response based on the available information. Please try rephrasing your question."
             
+            # Remove duplicate paragraphs/sections that LLM sometimes generates
+            final_response = self._deduplicate_response(final_response)
+            
             # Validate response if enabled and we have function calls
             validation_result = None
             if self.enable_validation and function_calls:
@@ -512,6 +514,39 @@ You ONLY help with dishwasher and refrigerator parts from PartSelect. Politely d
             "validation": {"score": 0, "issues": ["Failed to generate valid response after retries"]},
             "validation_attempts": validation_attempts
         }
+
+    def _deduplicate_response(self, text: str) -> str:
+        """
+        Remove duplicate paragraphs/sections that the LLM sometimes generates.
+        Checks for repeated blocks of 2+ sentences.
+        """
+        if not text or len(text) < 100:
+            return text
+        
+        # Split into paragraphs
+        paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
+        
+        if len(paragraphs) <= 1:
+            return text
+        
+        # Track seen paragraphs to remove duplicates
+        seen = set()
+        unique_paragraphs = []
+        
+        for para in paragraphs:
+            # Normalize for comparison (lowercase, remove extra spaces)
+            normalized = ' '.join(para.lower().split())
+            
+            # Only check substantial paragraphs (more than 50 chars)
+            if len(normalized) > 50:
+                if normalized not in seen:
+                    seen.add(normalized)
+                    unique_paragraphs.append(para)
+            else:
+                # Keep short paragraphs (like headers)
+                unique_paragraphs.append(para)
+        
+        return '\n\n'.join(unique_paragraphs)
 
 
 def format_part_display(part: Dict[str, Any]) -> str:
