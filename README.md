@@ -265,6 +265,41 @@ curl -X POST http://localhost:8000/api/chat \
 
 ---
 
+## Future Scope
+
+### 1. **Caching Layer**
+**Goal:** Reduce response times for repeated queries.
+
+### 2. **Enhanced Validation**
+**Goal:** Improve response quality and system reliability.
+  - Track per-tool response times (SQL, Vector, LLM)
+  - Alert if any component exceeds threshold (>5s)
+  - Implement circuit breakers for slow tools
+  
+**Golden Dataset Evaluation**:
+  - Create 100+ test queries with ground truth answers
+  - Automated nightly runs measuring:
+    - Accuracy (correct parts/info returned)
+    - Precision/Recall for search results
+  - Track regression over time
+
+### 3. **Model Context Protocol (MCP) Server**
+**Goal:** Scale to handle multiple AI assistants and integrations.
+- **MCP Server**: Expose tools as standardized MCP resources  
+- **Multi-Client Support**:
+  - Claude Desktop integration
+  - VS Code extension
+  - Third-party AI assistants
+  - API gateway for external developers
+
+**Expected Impact:** 10x easier to integrate with new AI platforms
+
+### 4. **Additional Enhancements**
+- **Multi-Appliance Support**: Add washing machines, ovens, dryers (50K+ parts)
+- **User Feedback Loop**: Thumbs up/down on responses → improve validation
+
+---
+
 ## Database Schema
 
 ### PostgreSQL - `parts` table (13,867 rows)
