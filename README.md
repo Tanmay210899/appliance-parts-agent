@@ -260,12 +260,8 @@ curl -X POST http://localhost:8000/api/chat \
 **Decision:** Use Next.js with SSR instead of plain React.
 
 **Why?**
-- Better SEO (server-side rendering)
 - Built-in routing and API routes
 - TypeScript support out of the box
-- Easy deployment to Vercel
-
-**Trade-off:** Slightly more complex than Create React App, but worth it
 
 ---
 
