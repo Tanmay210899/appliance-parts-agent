@@ -43,6 +43,27 @@ An intelligent chatbot for finding and installing dishwasher and refrigerator pa
 - **Context Awareness**: Tracks conversation history for follow-ups
 - **Validation**: Optional quality check to prevent hallucinations
 
+---
+
+## Demo Screenshots
+
+### Chatbot Interface
+![Chatbot Example](./data/images/Example%201.png)
+*Natural language conversation with context awareness*
+
+### Installation Steps
+![Installation Guide](./data/images/installation%20steps.png)
+*Detailed installation instructions with video links*
+
+### SQL Price Search
+![SQL Filtered Search](./data/images/SQL%20-%20price%20search.png)
+*Exact filtering using SQL for price ranges and brands*
+
+### Similar Parts Search
+![Semantic Search](./data/images/similar%20parts%20search.png)
+*Vector search finding semantically similar replacement parts*
+
+---
 
 ##  Tech Stack
 
