@@ -19,19 +19,19 @@ An intelligent chatbot for finding and installing dishwasher and refrigerator pa
 └─────────┬────────────────────────────────────────┬──────────────┘
           ↓                                        ↓
 ┌─────────────────────────────┐  ┌────────────────────────────────┐
-│    SQL TOOL (PostgreSQL)     │  │  VECTOR TOOL (Qdrant)          │
-│  • 13,867 parts              │  │  • Semantic search             │
-│  • Exact filters:            │  │  • SBERT embeddings (384-dim)  │
-│    - part_id, brand          │  │  • Collections:                │
-│    - price, availability     │  │    - parts (13,867)            │
-│    - install_difficulty      │  │    - repairs (21)              │
+│    SQL TOOL (PostgreSQL)    │  │  VECTOR TOOL (Qdrant)          │
+│  • 13,867 parts             │  │  • Semantic search             │
+│  • Exact filters:           │  │  • SBERT embeddings (384-dim)  │
+│    - part_id, brand         │  │  • Collections:                │
+│    - price, availability    │  │    - parts (13,867)            │
+│    - install_difficulty     │  │    - repairs (21)              │
 └─────────────────────────────┘  └────────────────────────────────┘
           ↓                                        ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│                   VALIDATION LAYER                  │
+│                   VALIDATION LAYER                              │
 │  • Checks for hallucinations                                    │
 │  • Verifies data grounding                                      │
-│  • Retry mechanism                            │
+│  • Retry mechanism                                              │
 └────────────────────────┬────────────────────────────────────────┘
                          ↓
                    FINAL RESPONSE
