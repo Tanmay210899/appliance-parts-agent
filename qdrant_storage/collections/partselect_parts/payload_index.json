@@ -1,0 +1,1 @@
+{"schema":{"part_price":"float","mpn_id":"keyword","appliance_type":"keyword","brand":"keyword","part_id":"keyword","availability":"keyword"}}
